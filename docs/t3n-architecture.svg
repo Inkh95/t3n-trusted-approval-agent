@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07111f"/><stop offset="1" stop-color="#16213a"/></linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#8ba7d9"/></marker>
+    <style>
+      .title{font:700 44px Arial,sans-serif;fill:#fff}.sub{font:22px Arial,sans-serif;fill:#aebbd0}
+      .h{font:700 25px Arial,sans-serif;fill:#fff}.t{font:19px Arial,sans-serif;fill:#cad5e6}
+      .box{stroke-width:2;rx:20}.line{stroke:#8ba7d9;stroke-width:4;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <text x="80" y="80" class="title">T3N Trusted Approval Agent</text>
+  <text x="80" y="120" class="sub">Guarded Strands workflow for safe, auditable paid-task execution</text>
+
+  <rect x="70" y="270" width="255" height="170" class="box" fill="#172a46" stroke="#5d7fae"/>
+  <text x="198" y="320" text-anchor="middle" class="h">Task Sources</text>
+  <text x="198" y="360" text-anchor="middle" class="t">GitHub · Superteam</text>
+  <text x="198" y="392" text-anchor="middle" class="t">Devpost · adapters</text>
+
+  <rect x="405" y="250" width="290" height="210" class="box" fill="#31255c" stroke="#9478ff"/>
+  <text x="550" y="305" text-anchor="middle" class="h">Strands Agent</text>
+  <text x="550" y="346" text-anchor="middle" class="t">evaluate_paid_task</text>
+  <text x="550" y="378" text-anchor="middle" class="t">start_eligible_task</text>
+  <text x="550" y="420" text-anchor="middle" class="t">Typed tool boundary</text>
+
+  <rect x="775" y="210" width="360" height="290" class="box" fill="#12383f" stroke="#36c5b5"/>
+  <text x="955" y="265" text-anchor="middle" class="h">Deterministic Safety Gate</text>
+  <text x="955" y="310" text-anchor="middle" class="t">AI use allowed</text>
+  <text x="955" y="344" text-anchor="middle" class="t">Reward confirmed</text>
+  <text x="955" y="378" text-anchor="middle" class="t">Bulgaria eligible</text>
+  <text x="955" y="412" text-anchor="middle" class="t">Zero cost · safe payout</text>
+  <text x="955" y="456" text-anchor="middle" class="t">Fail closed on missing evidence</text>
+
+  <rect x="1220" y="175" width="300" height="170" class="box" fill="#19452f" stroke="#53d18b"/>
+  <text x="1370" y="230" text-anchor="middle" class="h">CLAIMED</text>
+  <text x="1370" y="272" text-anchor="middle" class="t">Standing policy allows</text>
+  <text x="1370" y="305" text-anchor="middle" class="t">safe task.claim</text>
+
+  <rect x="1220" y="405" width="300" height="170" class="box" fill="#4a2d20" stroke="#f1a15e"/>
+  <text x="1370" y="460" text-anchor="middle" class="h">REVIEW REQUIRED</text>
+  <text x="1370" y="502" text-anchor="middle" class="t">Ambiguous or risky work</text>
+  <text x="1370" y="535" text-anchor="middle" class="t">stops before action</text>
+
+  <rect x="590" y="650" width="420" height="140" class="box" fill="#202d45" stroke="#7897ca"/>
+  <text x="800" y="704" text-anchor="middle" class="h">Hash-Chained Audit Log</text>
+  <text x="800" y="748" text-anchor="middle" class="t">Decision · policy rule · action · integrity</text>
+
+  <path d="M325 355 H405" class="line"/><path d="M695 355 H775" class="line"/>
+  <path d="M1135 310 C1170 310 1178 260 1220 260" class="line"/>
+  <path d="M1135 400 C1170 400 1178 490 1220 490" class="line"/>
+  <path d="M955 500 V610 C955 630 900 650 860 650" class="line"/>
+  <path d="M1370 575 V620 C1370 650 1060 705 1010 705" class="line"/>
+</svg>

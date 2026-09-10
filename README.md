@@ -1,5 +1,7 @@
 # T3N Trusted Approval Agent
 
+[Live interactive demo](https://t3n-trusted-approval-agent.kostovdobromir.chatgpt.site)
+
 A zero-cost, runnable MVP that puts a human approval boundary between an AI agent and sensitive real-world actions.
 
 Tailored to **Task Hunter**: research and drafting can run autonomously, while applications, messages, account creation, and payments require explicit approval. Credential disclosure and CAPTCHA circumvention are denied.

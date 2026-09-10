@@ -69,7 +69,9 @@ https://github.com/Inkh95/t3n-trusted-approval-agent
 
 ## Demo Video
 
-Ready local video: `docs/t3n-demo.mp4` (89 seconds, 1920×1080). TODO: upload this file to YouTube or Vimeo and add its public URL.
+https://www.youtube.com/watch?v=A1Q3XWMUlsA
+
+The 89-second, 1920×1080 demo is published as Unlisted. Its reproducible source file remains at `docs/t3n-demo.mp4`.
 
 Outline:
 
@@ -92,7 +94,7 @@ Outline:
 
 Working now: Strands SDK integration, typed tools, deterministic policy, standing approval, safe task workflow, audit chain, tests, CLI demo, public repository, and a configured public demo URL.
 
-Still required before final Devpost submission: attach the architecture PNG to the Devpost file field, publish the ready MP4 to YouTube/Vimeo, and add the AWS Builder ID. The repository contains an MIT license.
+Still required before final Devpost submission: attach the architecture PNG to the Devpost file field and add the AWS Builder ID. The repository contains an MIT license and the required demo video is live as Unlisted.
 
 ## Known Limitations
 
@@ -110,7 +112,7 @@ Still required before final Devpost submission: attach the architecture PNG to t
 - Public repo (27733): https://github.com/Inkh95/t3n-trusted-approval-agent
 - Architecture diagram (27734): ready at `docs/t3n-architecture.png`; TODO attach to Devpost
 - AWS Builder ID (27735): TODO user-provided ID
-- Demo video: ready at `docs/t3n-demo.mp4`; TODO publish and paste URL
+- Demo video: https://www.youtube.com/watch?v=A1Q3XWMUlsA (Unlisted)
 - Optional live demo (27736): https://t3n-trusted-approval-agent.kostovdobromir.chatgpt.site
 - Testing instructions (28191): use the commands above
 - Optional builder.aws.com post (27737): TODO if created

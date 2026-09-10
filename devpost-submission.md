@@ -59,7 +59,9 @@ RUN_STRANDS_MODEL=1 npm run demo:strands
 
 ## Public Demo Link
 
-TODO: optional hosted demo. The repository demo is currently the reproducible fallback.
+https://t3n-trusted-approval-agent.kostovdobromir.chatgpt.site
+
+The repository CLI demo remains the reproducible fallback.
 
 ## Public Repository Link
 
@@ -88,7 +90,7 @@ Outline:
 
 ## Submission Readiness Notes
 
-Working now: Strands SDK integration, typed tools, deterministic policy, standing approval, safe task workflow, audit chain, tests, CLI demo, and public repository.
+Working now: Strands SDK integration, typed tools, deterministic policy, standing approval, safe task workflow, audit chain, tests, CLI demo, public repository, and a configured public demo URL.
 
 Still required before final Devpost submission: attach the architecture PNG to the Devpost file field, publish the ready MP4 to YouTube/Vimeo, and add the AWS Builder ID. The repository contains an MIT license.
 
@@ -109,6 +111,6 @@ Still required before final Devpost submission: attach the architecture PNG to t
 - Architecture diagram (27734): ready at `docs/t3n-architecture.png`; TODO attach to Devpost
 - AWS Builder ID (27735): TODO user-provided ID
 - Demo video: ready at `docs/t3n-demo.mp4`; TODO publish and paste URL
-- Optional live demo (27736): TODO if deployed
+- Optional live demo (27736): https://t3n-trusted-approval-agent.kostovdobromir.chatgpt.site
 - Testing instructions (28191): use the commands above
 - Optional builder.aws.com post (27737): TODO if created

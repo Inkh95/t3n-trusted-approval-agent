@@ -4,6 +4,8 @@
 
 A zero-cost, runnable MVP that puts a human approval boundary between an AI agent and sensitive real-world actions.
 
+Built for the **AWS Agents for Humans Hackathon** Professional Agents track. The orchestration layer uses the official Strands Agents TypeScript SDK and exposes two narrow tools: task evaluation and guarded task start.
+
 Tailored to **Task Hunter**: research and drafting can run autonomously, while applications, messages, account creation, and payments require explicit approval. Credential disclosure and CAPTCHA circumvention are denied.
 
 ## How it works
@@ -22,10 +24,21 @@ Requires Node.js 22.18+ (Node 24 recommended).
 cp .env.example .env
 npm test
 npm run demo
+npm run demo:strands
 npm start
 ```
 
 Open `http://localhost:3000`. Local mode uses a labelled mock identity and simulated external actions, so it cannot accidentally submit or pay anything.
+
+`npm run demo:strands` proves the end-to-end workflow without cloud spend: a fully verified SEPA task reaches `CLAIMED`, while an unverified crypto/KYC task stops at `REVIEW_REQUIRED`. To exercise the conversational Strands model loop, configure an authorized model provider and set `RUN_STRANDS_MODEL=1`.
+
+## Strands workflow
+
+1. `evaluate_paid_task` validates official reward evidence, Bulgaria eligibility, AI permission, zero upfront cost, payout route, KYC/CAPTCHA and legal clarity.
+2. `start_eligible_task` receives the same typed evidence and cannot bypass validation.
+3. Only a complete match receives the narrow `task.claim.standing-approval` policy decision.
+4. The gateway emits a one-time simulated receipt and a tamper-evident audit event.
+5. Missing or risky evidence fails closed as `REVIEW_REQUIRED`.
 
 ## Real T3N sandbox identity
 

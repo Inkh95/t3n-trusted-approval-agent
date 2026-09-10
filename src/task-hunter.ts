@@ -13,6 +13,11 @@ export interface TaskOpportunity{
   eligibility:Eligibility;
   aiPolicy:AiPolicy;
   evidence:string[];
+  rewardConfirmed?:boolean;
+  upfrontCost?:number;
+  requiresKyc?:boolean;
+  requiresCaptcha?:boolean;
+  legalTermsClear?:boolean;
 }
 
 export interface TaskIntakeResult{
@@ -29,6 +34,11 @@ export function prepareTaskAction(task:TaskOpportunity,agentDid="did:t3n:task-hu
   if(task.eligibility==="blocked")blockers.push("Task is not available in Bulgaria");
   if(task.eligibility==="unknown")blockers.push("Country eligibility is not verified");
   if(task.payoutMethod==="unverified")blockers.push("Payout method is not verified");
+  if(task.rewardConfirmed!==true)blockers.push("Reward is not officially confirmed");
+  if((task.upfrontCost??0)>0)blockers.push("Task requires an upfront cost");
+  if(task.requiresKyc)blockers.push("Task requires KYC");
+  if(task.requiresCaptcha)blockers.push("Task requires CAPTCHA");
+  if(task.legalTermsClear!==true)blockers.push("Legal or IP terms are not verified");
   if(!Number.isFinite(task.reward.amount)||task.reward.amount<=0)blockers.push("Reward must be a confirmed positive amount");
   if(task.aiPolicy==="forbidden")blockers.push("Platform forbids AI assistance");
   if(!task.url.startsWith("https://"))blockers.push("Task URL must use HTTPS");
@@ -43,7 +53,7 @@ export function prepareTaskAction(task:TaskOpportunity,agentDid="did:t3n:task-hu
     blockers,
     action:{
       agentDid,
-      type:task.aiPolicy==="forbidden"?"task.ai_forbidden":"application.submit",
+      type:task.aiPolicy==="forbidden"?"task.ai_forbidden":autoApproved?"task.claim":"application.submit",
       target:task.url,
       summary:`Apply for ${task.title} on ${task.platform}`,
       amount:task.reward.amount,

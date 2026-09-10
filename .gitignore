@@ -1,5 +1,6 @@
 node_modules/
 data/
+docs/demo/
 .env
 .env.*
 !.env.example

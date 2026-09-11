@@ -49,7 +49,7 @@ npm run check
 npm run demo:nebius
 ```
 
-Expected: 16 tests pass; a verified SEPA opportunity routes to `GO`; an unverified KYC opportunity routes to `REVIEW_REQUIRED`; the two-event audit chain is valid.
+Expected: 20 tests pass; a verified SEPA opportunity routes to `GO`; an unverified KYC opportunity routes to `REVIEW_REQUIRED`; the two-event audit chain is valid; Daily Income source routing covers Algora, Polar, Fiverr, and Contra.
 
 Optional authenticated inference:
 
@@ -81,7 +81,7 @@ TODO: Record and upload the Nebius-specific 60–75 second script in `docs/nebiu
 
 ## Submission Readiness Notes
 
-Working now: adapter, schema validation, deterministic policy, scoring, routing, audit chain, 16 tests, CLI/API demo, public repository, MIT license, architecture asset, and judge walkthrough.
+Working now: adapter, schema validation, deterministic policy, scoring, routing, audit chain, 20 tests, CLI/API demo, Daily Income source routing, public repository, MIT license, architecture asset, and judge walkthrough.
 
 Remaining: authenticated live inference, honest mandatory platform feedback, a public Nebius-specific YouTube demo, deployed-build verification, and personal confirmation of the age/employee declarations.
 

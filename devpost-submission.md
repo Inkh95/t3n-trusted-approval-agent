@@ -83,6 +83,8 @@ TODO: Record and upload the Nebius-specific 60–75 second script in `docs/nebiu
 
 Working now: adapter, schema validation, deterministic policy, scoring, routing, audit chain, 20 tests, CLI/API demo, Daily Income source routing, public repository, MIT license, architecture asset, and judge walkthrough.
 
+Rules acknowledgment: confirmed by the participant on September 11, 2026.
+
 Remaining: authenticated live inference, honest mandatory platform feedback, a public Nebius-specific YouTube demo, deployed-build verification, and personal confirmation of the age/employee declarations.
 
 ## Known Limitations

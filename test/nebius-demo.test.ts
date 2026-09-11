@@ -8,6 +8,6 @@ test("Nebius demo shows GO vs REVIEW_REQUIRED with a valid audit chain", async (
   assert.equal(result.unsafe.route, "REVIEW_REQUIRED");
   assert.equal(result.audit.valid, true);
   assert.equal(result.audit.events.length, 2);
-  assert.equal(result.audit.events[0].event, "nebius.opportunity_decision");
-  assert.equal(result.audit.events[1].event, "nebius.opportunity_decision");
+  assert.equal(result.audit.events[0].event, "t3n.nebius.decision");
+  assert.equal(result.audit.events[1].event, "t3n.nebius.decision");
 });

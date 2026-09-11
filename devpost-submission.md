@@ -1,118 +1,120 @@
 # Title
 
-T3N Trusted Approval Agent
+T3N Nebius Edition
 
 ## One-line Summary
 
-A guarded professional agent that verifies paid work opportunities, rejects unsafe or unverifiable tasks, and starts only eligible zero-cost work under a standing human policy.
+An auditable opportunity copilot that uses Nebius-hosted NVIDIA Nemotron for reasoning while deterministic policy gates control real-world actions.
 
 ## Problem
 
-Independent professionals lose time checking fragmented task marketplaces, verifying whether rewards and eligibility are real, and deciding whether a task is safe to claim. Blind automation is dangerous: it can accept unclear legal terms, expose credentials, trigger payments, or claim work that cannot be completed.
+AI agents can interpret messy paid-work listings, but blindly automating real-world decisions is unsafe. Eligibility, payout, AI-use rules, upfront cost, KYC, legal scope, and acceptance likelihood all need evidence—not model confidence.
 
 ## Solution
 
-T3N combines a task hunter with an approval gateway and tamper-evident audit log. Each opportunity is normalized, evaluated against explicit evidence, and either rejected, escalated for review, or claimed under the user's standing approval. The agent fails closed when reward, geography, AI-use permission, payout safety, or zero-cost execution cannot be verified.
+T3N separates reasoning from authority. NVIDIA Nemotron 3 Super on Nebius Token Factory analyzes ambiguity, risk, effort, and acceptance probability. A deterministic gate independently verifies hard constraints, an economic scorer ranks eligible work, and a hash-chained audit log records the final `GO`, `REVIEW_REQUIRED`, or `NO_GO` route.
 
 ## Why This Matters
 
-The system gives solo professionals more reach without surrendering control. It automates repetitive discovery and verification while preserving human authority over consequential or ambiguous actions.
+Independent professionals can use AI to find and prioritize real opportunities without surrendering control over consequential actions. Missing or conflicting evidence fails closed, and model optimism can never override policy.
 
 ## How We Used AI
 
-The project uses the Strands Agents TypeScript SDK with two typed tools: `evaluate_paid_task` and `start_eligible_task`. The model can reason about a listing and invoke the workflow, but it cannot bypass deterministic policy. Tool calls prohibit fabricated claims, CAPTCHA solving, credential collection, KYC handling, payments, or starting a task with missing evidence.
+The app calls NVIDIA Nemotron 3 Super through Nebius Token Factory's OpenAI-compatible API. A prompt requests structured reasoning; Zod validates every response before it can influence scoring. The model estimates acceptance probability and effort and flags ambiguity, while deterministic code remains the sole authorization layer.
 
 ## How We Used Codex
 
-Codex inspected the existing safety gateway, integrated the Strands SDK, designed the typed tool boundary, added the standing-approval rule, expanded task-evidence validation, wrote tests, ran the end-to-end demo, and published the verified implementation to GitHub.
+Codex inspected the existing approval gateway, implemented the Nebius adapter and structured-output boundary, added economic scoring and three-way routing, expanded tests, diagnosed and fixed CI, built the judge demo, and prepared the Devpost package. Credentials, declarations, and final submission remain human-controlled.
 
 ## Key Features
 
-- Evidence-based task screening for AI permission, confirmed reward, Bulgarian eligibility, zero upfront cost, legal clarity, and safe payout.
-- Deterministic fail-closed policy beneath the AI layer.
-- Standing approval for `task.claim` only after all hard gates pass.
-- Explicit review path for ambiguity or elevated risk.
-- Hash-chained audit records with integrity verification.
-- Safe demo covering both an accepted SEPA task and a blocked KYC/crypto task.
+- Schema-validated Nebius/Nemotron reasoning.
+- Deterministic checks for AI permission, Bulgaria eligibility, zero cost, verified payout, confirmed reward, KYC/CAPTCHA, and legal clarity.
+- Expected-value-per-hour ranking adjusted for payout speed and competition.
+- Explicit `GO`, `REVIEW_REQUIRED`, and `NO_GO` routes.
+- Tamper-evident SHA-256 audit chain.
+- Reproducible mock demo plus opt-in live inference.
 
 ## Architecture
 
-Marketplace adapters feed normalized opportunities into the Strands agent. Its typed evaluation tool calls the deterministic task hunter. Eligible work proceeds through the trusted approval gateway to a claim action; anything ambiguous stops at review. Every decision is appended to the audit chain.
+`Opportunity -> T3N policy gate -> Nebius/Nemotron reasoning -> economic score -> route -> audit chain`
 
-Architecture diagram file: `docs/t3n-architecture.png` (to be generated and attached to the Devpost draft).
+Diagram: `docs/nebius-architecture.svg`.
 
 ## Testing Instructions
 
 ```bash
-npm install
+npm ci
 npm run check
-npm run demo:strands
+npm run demo:nebius
 ```
 
-Expected result: six tests pass. The verified zero-cost SEPA example reaches `CLAIMED`; the unconfirmed KYC/crypto example reaches `REVIEW_REQUIRED`; the audit chain reports valid.
+Expected: 16 tests pass; a verified SEPA opportunity routes to `GO`; an unverified KYC opportunity routes to `REVIEW_REQUIRED`; the two-event audit chain is valid.
 
-Optional live-model run (requires configured AWS credentials and model access):
+Optional authenticated inference:
 
 ```bash
-RUN_STRANDS_MODEL=1 npm run demo:strands
+NEBIUS_API_KEY='<local-key>' RUN_NEBIUS_MODEL=1 npm run demo:nebius
 ```
 
 ## Public Demo Link
 
 https://t3n-trusted-approval-agent.kostovdobromir.chatgpt.site
 
-The repository CLI demo remains the reproducible fallback.
+TODO: verify that the deployed build exposes the Nebius judge demo. Local/API fallback: `npm start`, then `GET /api/nebius/demo`.
 
 ## Public Repository Link
 
-https://github.com/Inkh95/t3n-trusted-approval-agent
+https://github.com/Inkh95/t3n-trusted-approval-agent/tree/nebius-hackathon
 
 ## Demo Video
 
-https://www.youtube.com/watch?v=A1Q3XWMUlsA
-
-The 89-second, 1920×1080 demo is published as Unlisted. Its reproducible source file remains at `docs/t3n-demo.mp4`.
-
-Outline:
-
-1. The problem: fragmented paid tasks and unsafe blind automation.
-2. The audience: independent professionals and small operators.
-3. Show a verified opportunity reaching `CLAIMED`.
-4. Show a risky opportunity stopping at `REVIEW_REQUIRED`.
-5. Show the policy result and valid audit chain.
-6. Explain why deterministic approval beneath Strands matters.
+TODO: Record and upload the Nebius-specific 60–75 second script in `docs/nebius-demo-video-script.md` as a public YouTube video (maximum 3 minutes).
 
 ## Screenshot Shot List
 
-1. Repository README and setup instructions.
-2. Passing six-test output.
-3. Safe demo result: `CLAIMED` and `revolut_sepa`.
-4. Risky demo result: `REVIEW_REQUIRED` with blockers.
-5. Architecture diagram.
+1. Dashboard before the judge demo.
+2. Verified opportunity routed to `GO` with its score.
+3. Risky opportunity routed to `REVIEW_REQUIRED` with blockers.
+4. Raw structured reasoning and policy result.
+5. Valid audit chain plus architecture diagram.
 
 ## Submission Readiness Notes
 
-Working now: Strands SDK integration, typed tools, deterministic policy, standing approval, safe task workflow, audit chain, tests, CLI demo, public repository, and a configured public demo URL.
+Working now: adapter, schema validation, deterministic policy, scoring, routing, audit chain, 16 tests, CLI/API demo, public repository, MIT license, architecture asset, and judge walkthrough.
 
-Still required before final Devpost submission: attach the architecture PNG to the Devpost file field and add the AWS Builder ID. The repository contains an MIT license and the required demo video is live as Unlisted.
+Remaining: authenticated live inference, honest mandatory platform feedback, a public Nebius-specific YouTube demo, deployed-build verification, and personal confirmation of the age/employee declarations.
 
 ## Known Limitations
 
-- Marketplace-specific claiming remains adapter-dependent.
-- CAPTCHA, credentials, KYC, purchases, and unclear legal terms always require a human or are denied.
-- The default demo is deterministic; live model invocation requires AWS model credentials.
-- No hosted UI or AgentCore deployment yet.
+- Marketplace-specific execution remains adapter-dependent.
+- CAPTCHA, credentials, KYC, purchases, and unclear terms require a human or are denied.
+- Mock inference is the zero-cost default; live inference requires a local Token Factory key.
+- The existing hosted demo may lag behind this branch until redeployed.
 
 ## TODO Official Form Fields
 
-- Submitter Type (27729): Individual
-- Country of Residence (27730): Bulgaria
-- Organization (27731): not applicable
-- Track (27732): Professional Agents
-- Public repo (27733): https://github.com/Inkh95/t3n-trusted-approval-agent
-- Architecture diagram (27734): ready at `docs/t3n-architecture.png`; TODO attach to Devpost
-- AWS Builder ID (27735): TODO user-provided ID
-- Demo video: https://www.youtube.com/watch?v=A1Q3XWMUlsA (Unlisted)
-- Optional live demo (27736): https://t3n-trusted-approval-agent.kostovdobromir.chatgpt.site
-- Testing instructions (28191): use the commands above
-- Optional builder.aws.com post (27737): TODO if created
+- 28261 Submitter Type: `Individual`
+- 28262 Organization Name: `N/A`
+- 28265 Country: `Bulgaria`
+- 28266 Canada province: `N/A`
+- 28267 Track: `Best apps and agents`
+- 28268 Existing before August 26, 2026: `Existing`
+- 28269 Significant update: Added a Nebius Token Factory adapter for NVIDIA Nemotron 3 Super, schema-validated reasoning, economic scoring, three-way routing, a judge-facing API/UI demo, expanded tests, CI, architecture documentation, and a Nebius-specific submission package.
+- 28270 Repository: https://github.com/Inkh95/t3n-trusted-approval-agent/tree/nebius-hackathon
+- 28271 Demo: https://t3n-trusted-approval-agent.kostovdobromir.chatgpt.site — TODO verify deployed Nebius flow.
+- 28272 Model: NVIDIA Nemotron 3 Super 120B A12B, selected for strong reasoning with a smaller active-parameter footprint than an ultra-scale model.
+- 28273 Output quality rating: TODO after authenticated live inference; never infer this from mocked output.
+- 28274 Approach: Prompt-engineered structured JSON output with Zod validation; no fine-tuning.
+- 28275 Comparison with other models: TODO after authenticated live inference.
+- 28276 Nebius capabilities: Token Factory's OpenAI-compatible hosted API; TODO add observed latency/reliability after authenticated inference. No dedicated GPU instance or autoscaling deployment is claimed.
+- 28277 Recommendation rating: TODO after authenticated live inference.
+- 28278 Cloud/local experience rating: TODO after authenticated live inference.
+- 28279 Improvement request (draft): richer request tracing, per-model latency/cost telemetry, and clearer model-version lifecycle metadata.
+- 28280 Nemotron wish (draft): smaller low-latency reasoning variants with equally reliable structured-output adherence.
+- 28282 Tavily: `No`
+- 28281 Builders & Brews city: leave blank unless personally attended.
+- 28283 Age declaration: PERSONAL CONFIRMATION REQUIRED.
+- 28284 Employee declaration: PERSONAL CONFIRMATION REQUIRED.
+
+Official deadline: October 30, 2026 at 17:00 UTC. Final submission is not authorized yet.

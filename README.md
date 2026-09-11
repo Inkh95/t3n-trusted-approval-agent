@@ -8,6 +8,72 @@ Built for the **AWS Agents for Humans Hackathon** Professional Agents track. The
 
 Tailored to **Task Hunter**: research and drafting can run autonomously, while applications, messages, account creation, and payments require explicit approval. Credential disclosure and CAPTCHA circumvention are denied.
 
+## T3N Nebius Edition
+
+The `nebius-hackathon` branch extends T3N for the **Nebius × NVIDIA Global AI Hackathon** with a hybrid architecture:
+
+- **Nebius Token Factory + NVIDIA Nemotron** provides structured reasoning about scope, ambiguity, risk, acceptance probability, and estimated effort.
+- **Deterministic policy gates** independently verify AI permission, Bulgaria eligibility, zero-cost participation, payout verification, reward confirmation, KYC/CAPTCHA constraints, and legal clarity.
+- **Economic scoring** ranks opportunities using expected value per hour, payout speed, and competition.
+- **Tamper-evident audit logging** records the final route and the evidence-derived decision path.
+
+The model never gets authority to override policy. Missing or conflicting evidence fails closed.
+
+![T3N Nebius Edition architecture](docs/nebius-architecture.svg)
+
+### Decision flow
+
+```text
+Opportunity
+   │
+   ├──> T3N deterministic policy gate ── blocked ──> REVIEW_REQUIRED / NO_GO
+   │
+   └──> Nebius-hosted Nemotron reasoning
+              │
+              └──> Economic score
+                       │
+                       └──> GO / REVIEW_REQUIRED / NO_GO
+                                  │
+                                  └──> Hash-chained audit event
+```
+
+### Run the Nebius demo
+
+The default demo uses mocked model output and requires no paid API:
+
+```bash
+npm install
+npm test
+npm run demo:nebius
+```
+
+For live inference with hackathon credits:
+
+```bash
+export NEBIUS_API_KEY='<your-local-key>'
+export RUN_NEBIUS_MODEL=1
+npm run demo:nebius
+```
+
+Optional overrides:
+
+```bash
+export NEBIUS_BASE_URL='https://api.tokenfactory.us-central1.nebius.com/v1'
+export NEBIUS_MODEL='nvidia/nemotron-3-super-120b-a12b'
+```
+
+Never commit API keys.
+
+### What judges can verify quickly
+
+1. Run `npm test` and confirm policy, scoring, orchestration, and audit tests pass.
+2. Run `npm run demo:nebius`.
+3. Observe a verified AI-allowed, zero-cost, SEPA-paid opportunity route to `GO`.
+4. Observe an unsafe/unverified opportunity route to `REVIEW_REQUIRED`.
+5. Confirm the audit chain verifies after both decisions.
+
+This design intentionally separates **probabilistic reasoning** from **deterministic authorization**.
+
 ## How it works
 
 1. An agent requests an action with its `did:t3n` identity.

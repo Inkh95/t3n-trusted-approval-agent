@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { evaluateWithT3NNebius } from "../src/nebius/orchestrator.ts";
+import { AuditLog } from "../src/audit.ts";
 
 const safeTask = {
   id: "docs-1",
@@ -68,4 +69,22 @@ test("routes AI-forbidden work to NO_GO", async () => {
 
   assert.equal(result.route, "NO_GO");
   assert.equal(result.policy.classification, "AI FORBIDDEN");
+});
+
+test("writes a tamper-evident audit event for the decision", async () => {
+  const audit = new AuditLog();
+  const result = await evaluateWithT3NNebius({
+    task: safeTask,
+    description: "Improve the installation guide",
+    payoutSpeed: "FAST",
+    competition: "MEDIUM",
+    rewardEur: 120,
+  }, { analyze: mockReasoning, audit });
+
+  assert.equal(result.route, "GO");
+  assert.ok(result.auditEventHash);
+  assert.equal(audit.list().length, 1);
+  assert.equal(audit.list()[0].event, "t3n.nebius.decision");
+  assert.equal(audit.list()[0].detail.route, "GO");
+  assert.equal(audit.verify(), true);
 });

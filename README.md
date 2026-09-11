@@ -1,6 +1,6 @@
 # T3N Trusted Approval Agent
 
-[Live interactive demo](https://t3n-trusted-approval-agent.kostovdobromir.chatgpt.site)
+[Live interactive demo](https://t3n-trusted-approval-agent.kostovdobromir.chatgpt.site) · [90-second judge walkthrough](docs/judge-walkthrough.md) · [Submission package](devpost-submission.md)
 
 A zero-cost, runnable MVP that puts a human approval boundary between an AI agent and sensitive real-world actions.
 
@@ -62,7 +62,19 @@ export NEBIUS_BASE_URL='https://api.tokenfactory.us-central1.nebius.com/v1'
 export NEBIUS_MODEL='nvidia/nemotron-3-super-120b-a12b'
 ```
 
-Never commit API keys.
+Never commit API keys. Live inference uses the OpenAI-compatible Token Factory endpoint; model output is schema-validated before it can influence scoring.
+
+### 60-second judge path
+
+```bash
+npm ci
+npm run check
+npm run demo:nebius
+```
+
+Expected proof: 16 passing tests, one verified task routed to `GO`, one risky task routed to `REVIEW_REQUIRED`, and a valid two-event audit chain. No credentials or paid calls are needed for this reproducible path.
+
+To inspect the same flow in the UI, run `npm start`, open `http://localhost:3000`, and use **Run judge demo**. The raw API result is also available at `GET /api/nebius/demo`.
 
 ### What judges can verify quickly
 
@@ -72,7 +84,7 @@ Never commit API keys.
 4. Observe an unsafe/unverified opportunity route to `REVIEW_REQUIRED`.
 5. Confirm the audit chain verifies after both decisions.
 
-This design intentionally separates **probabilistic reasoning** from **deterministic authorization**.
+This design intentionally separates **probabilistic reasoning** from **deterministic authorization**. T3N fits the **Best apps and agents** track: it is a practical opportunity copilot for people who want AI assistance without delegating safety-critical authority.
 
 ## How it works
 

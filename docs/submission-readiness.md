@@ -33,12 +33,18 @@ This checklist is the source of truth for what is technically complete versus wh
 - [x] Built-with stack prepared.
 - [x] Public GitHub repository available.
 - [x] Architecture asset available.
-- [ ] Confirm the user's Nebius hackathon registration through Devpost connector.
-- [ ] Fetch current submission requirements and judging criteria.
+- [x] Confirm the user's Nebius hackathon registration through Devpost connector.
+- [x] Fetch current submission requirements and judging criteria.
 - [ ] Create/update the Devpost project record.
 - [ ] Add a real publicly playable demo video URL if required.
 - [ ] Add a live demo URL if required or strategically useful.
-- [ ] Complete every required custom submission field.
+- [ ] Complete every required custom submission field; live-experience ratings await authenticated inference and two declarations require personal confirmation.
+
+## Secretless live smoke test
+
+- [x] Reached the real Token Factory `chat/completions` endpoint on 2026-09-11 without sending a token.
+- [x] Received the expected HTTP 401 `token is not present`, proving DNS/TLS/routing and the configured base URL are live without exposing credentials.
+- [ ] Run an authenticated inference to validate the selected model ID and collect honest latency/output-quality evidence.
 - [ ] Before final submission, present the finished project to the user for the explicit final approval required by the standing workflow.
 - [ ] Mark SUBMITTED only after Devpost returns an actual Submitted status.
 

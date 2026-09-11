@@ -1,5 +1,20 @@
 export type DailyIncomeCandidate = { title:string; body:string; url:string; labels:string[] };
+export type IncomePlatform="Algora"|"Polar"|"Fiverr"|"Contra"|"GitHub";
 export type DailyIncomeAssessment = { rewardAmount:number|null; currency:"EUR"|"USD"|"GBP"|"UNKNOWN"; aiPolicy:"AI ALLOWED"|"AI LIMITED"; payout:"PayPal"|"SEPA"|"Crypto"|"Unverified"; eligibility:"ELIGIBLE"|"UNKNOWN"; route:"GO"|"REVIEW_REQUIRED"; blockers:string[] };
+export const incomeSources=[
+  {platform:"Algora",discovery:"AUTOMATED",claim:"VERIFIED_ONLY"},
+  {platform:"Polar",discovery:"AUTOMATED",claim:"VERIFIED_ONLY"},
+  {platform:"Fiverr",discovery:"AUTOMATED",claim:"HUMAN_CONFIRMATION"},
+  {platform:"Contra",discovery:"AUTOMATED",claim:"HUMAN_CONFIRMATION"},
+] as const;
+export function detectIncomePlatform(candidate:Pick<DailyIncomeCandidate,"title"|"body"|"url">):IncomePlatform{
+  const text=`${candidate.title}\n${candidate.body}\n${candidate.url}`;
+  if(/algora(?:\.io)?/i.test(text))return"Algora";
+  if(/polar(?:\.sh)?/i.test(text))return"Polar";
+  if(/fiverr(?:\.com)?/i.test(text))return"Fiverr";
+  if(/contra(?:\.com)?/i.test(text))return"Contra";
+  return"GitHub";
+}
 const moneyPatterns=[/(?:€|EUR\s?)(\d+(?:[.,]\d+)?)/i,/(?:\$|USD\s?)(\d+(?:[.,]\d+)?)/i,/(?:£|GBP\s?)(\d+(?:[.,]\d+)?)/i];
 export function assessDailyIncome(candidate:DailyIncomeCandidate):DailyIncomeAssessment{
   const text=`${candidate.title}\n${candidate.body}`;

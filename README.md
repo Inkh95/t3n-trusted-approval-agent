@@ -72,7 +72,7 @@ npm run check
 npm run demo:nebius
 ```
 
-Expected proof: 16 passing tests, one verified task routed to `GO`, one risky task routed to `REVIEW_REQUIRED`, and a valid two-event audit chain. No credentials or paid calls are needed for this reproducible path.
+Expected proof: 20 passing tests, one verified task routed to `GO`, one risky task routed to `REVIEW_REQUIRED`, a valid two-event audit chain, and fail-closed Daily Income source routing for Algora, Polar, Fiverr, and Contra. No credentials or paid calls are needed for this reproducible path.
 
 To inspect the same flow in the UI, run `npm start`, open `http://localhost:3000`, and use **Run judge demo**. The raw API result is also available at `GET /api/nebius/demo`.
 

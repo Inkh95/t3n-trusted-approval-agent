@@ -35,7 +35,7 @@ This checklist is the source of truth for what is technically complete versus wh
 - [x] Architecture asset available.
 - [x] Confirm the user's Nebius hackathon registration through Devpost connector.
 - [x] Fetch current submission requirements and judging criteria.
-- [ ] Create/update the Devpost project record.
+- [x] Create/update the Devpost draft project record: `T3N Nebius Edition` (project 1424173, version 2).
 - [ ] Add a real publicly playable demo video URL if required.
 - [ ] Add a live demo URL if required or strategically useful.
 - [ ] Complete every required custom submission field; live-experience ratings await authenticated inference and two declarations require personal confirmation.
@@ -45,6 +45,7 @@ This checklist is the source of truth for what is technically complete versus wh
 - [x] Reached the real Token Factory `chat/completions` endpoint on 2026-09-11 without sending a token.
 - [x] Received the expected HTTP 401 `token is not present`, proving DNS/TLS/routing and the configured base URL are live without exposing credentials.
 - [ ] Run an authenticated inference to validate the selected model ID and collect honest latency/output-quality evidence.
+- [x] Check the current hosted URL; it still serves the pre-Nebius UI and must be redeployed before being claimed as the Nebius working demo.
 - [ ] Before final submission, present the finished project to the user for the explicit final approval required by the standing workflow.
 - [ ] Mark SUBMITTED only after Devpost returns an actual Submitted status.
 

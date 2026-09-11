@@ -1,0 +1,23 @@
+name: Task Hunter Daily Income Watch
+on:
+  schedule:
+    - cron: "15 5 * * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.18"
+          cache: npm
+      - run: npm ci
+      - name: Scan public paid GitHub work
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/daily-income-watch.mjs

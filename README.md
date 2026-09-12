@@ -32,6 +32,26 @@ Open `http://localhost:3000`. Local mode uses a labelled mock identity and simul
 
 `npm run demo:strands` proves the end-to-end workflow without cloud spend: a fully verified SEPA task reaches `CLAIMED`, while an unverified crypto/KYC task stops at `REVIEW_REQUIRED`. To exercise the conversational Strands model loop, configure an authorized model provider and set `RUN_STRANDS_MODEL=1`.
 
+## CALL-E bounty verification
+
+The `src/calle-bounty-verifier.ts` integration adds a focused, verification-only phone workflow for public bounty listings. Before a task is claimed, it can ask the official organizer to confirm the reward, AI-use policy, geographic eligibility, deadline, payout route, and submission URL. The result is structured evidence; it never claims the task, asks for credentials, or handles payment details.
+
+The default demo is a no-network preview and uses a fictional reserved number:
+
+```bash
+npm run demo:calle
+```
+
+Live mode is deliberately opt-in. It requires an API key and a phone number owned by or authorized to the operator; it can consume a CALL-E call credit and may create a real outbound call:
+
+```bash
+export CALLE_API_KEY='...'
+export CALLE_RECIPIENT_PHONE='+15550101000'
+npm run demo:calle -- --live
+```
+
+Never put the API key or a real phone number in source, logs, screenshots, or pull requests. The call result only becomes eligible input for the existing deterministic approval gateway; it does not bypass human approval for an external claim or submission.
+
 ## Strands workflow
 
 1. `evaluate_paid_task` validates official reward evidence, Bulgaria eligibility, AI permission, zero upfront cost, payout route, KYC/CAPTCHA and legal clarity.

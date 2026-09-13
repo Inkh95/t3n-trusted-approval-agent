@@ -1,0 +1,77 @@
+name: Spark X2.5 Evaluation
+
+on:
+  push:
+    branches: [spark-x25-eval]
+  workflow_dispatch:
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Record runner environment
+        run: |
+          mkdir -p spark_eval/results
+          uname -a | tee spark_eval/results/uname.txt
+          lscpu | tee spark_eval/results/lscpu.txt
+          free -h | tee spark_eval/results/memory.txt
+          python3 --version | tee spark_eval/results/python-version.txt
+
+      - name: Build XHToken llama.cpp
+        run: |
+          git clone --depth 1 https://github.com/XHToken/llama.cpp.git llama.cpp
+          git -C llama.cpp rev-parse HEAD | tee spark_eval/results/llama-cpp-revision.txt
+          cmake -S llama.cpp -B llama.cpp/build -DCMAKE_BUILD_TYPE=Release -DGGML_NATIVE=OFF
+          cmake --build llama.cpp/build --config Release -j 2 --target llama-cli
+
+      - name: Resolve and download pinned official GGUF
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, urllib.request
+          repo='XHToken/Spark-X2.5-1.7B-GGUF'
+          with urllib.request.urlopen(f'https://huggingface.co/api/models/{repo}') as r:
+              data=json.load(r)
+          sha=data['sha']
+          open('spark_eval/results/model-revision.txt','w').write(sha+'\n')
+          print(sha)
+          PY
+          REV=$(cat spark_eval/results/model-revision.txt)
+          URL="https://huggingface.co/XHToken/Spark-X2.5-1.7B-GGUF/resolve/${REV}/Spark-X2.5-1.7B-Q4_K_M.gguf?download=true"
+          curl -L --fail --retry 3 "$URL" -o model.gguf
+          sha256sum model.gguf | tee spark_eval/results/model-sha256.txt
+          ls -lh model.gguf | tee spark_eval/results/model-file.txt
+
+      - name: Run deterministic robustness case study
+        env:
+          MODEL_PATH: model.gguf
+          LLAMA_CLI: ./llama.cpp/build/bin/llama-cli
+        run: python3 spark_eval/eval.py | tee spark_eval/results/run.log
+
+      - name: Produce machine-readable manifest
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import json, os, platform, datetime
+          p='spark_eval/results/manifest.json'
+          data={
+            'timestamp_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            'github_sha': os.getenv('GITHUB_SHA'),
+            'github_run_id': os.getenv('GITHUB_RUN_ID'),
+            'runner_os': platform.platform(),
+            'ai_assistance_disclosure': 'Evaluation design, automation, analysis drafting, and workflow preparation were AI-assisted/AI-operated by ChatGPT. Model outputs are from a real Spark-X2.5 run and are not fabricated.'
+          }
+          open(p,'w').write(json.dumps(data, indent=2))
+          PY
+
+      - name: Upload reproducibility artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: spark-x25-evaluation-results
+          path: spark_eval/results
+          if-no-files-found: error
+          retention-days: 30

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Aegis Home</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <strong>Aegis Home</strong>
+        <span>Alexa+ agentic safety layer</span>
+      </div>
+      <span class="ready">● System ready</span>
+    </header>
+
+    <section class="hero">
+      <p class="eyebrow">EXPLAINABLE ACTIONS, NOT BLIND AUTOMATION</p>
+      <h1>Your home can act.<br />You stay in control.</h1>
+      <p>Turn natural-language requests into transparent household action plans, risk checks, and explicit approvals for consequential changes.</p>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <p class="label">01 · REQUEST</p>
+        <h2>Tell Aegis what you want</h2>
+        <textarea id="request">Start my evening routine and make the house comfortable.</textarea>
+        <button id="analyze">Analyze & prepare actions</button>
+      </article>
+
+      <article class="card">
+        <p class="label">02 · PLAN</p>
+        <h2>Action preview</h2>
+        <div id="plan" class="plan muted">Run analysis to generate a policy-checked plan.</div>
+        <div id="gate"></div>
+      </article>
+    </section>
+
+    <section class="card audit">
+      <p class="label">03 · AUDIT TRAIL</p>
+      <h2>Why Aegis made each decision</h2>
+      <div id="audit" class="audit-grid">
+        <div><span>Intent</span><strong>Awaiting request</strong></div>
+        <div><span>Policy check</span><strong>Not run</strong></div>
+        <div><span>User control</span><strong>Not required yet</strong></div>
+        <div><span>Execution</span><strong>Simulated Alexa+ experience</strong></div>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

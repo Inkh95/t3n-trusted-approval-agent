@@ -13,7 +13,7 @@ CASES = [
 ]
 
 SYSTEM = "Solve the math problem with one compact calculation. End with exactly one line: FINAL: <number>."
-MAX_TOKENS = 48
+MAX_TOKENS = 128
 
 def norm(x):
     try:

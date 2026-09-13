@@ -12,8 +12,8 @@ CASES = [
     {"id":"percent","group":"percent","prompt":"A price is increased by 20% and then decreased by 20%. The final price is 96 dollars. What was the original price in dollars?","answer":"100"}
 ]
 
-SYSTEM = "Solve the math problem with one compact calculation. End with exactly one line: FINAL: <number>."
-MAX_TOKENS = 128
+SYSTEM = "Solve the math problem briefly. End with exactly one line: FINAL: <number>."
+MAX_TOKENS = 64
 
 def norm(x):
     try:
@@ -26,6 +26,7 @@ def run_case(case):
     cmd = [
         LLAMA, "-m", MODEL,
         "--jinja", "--single-turn",
+        "--reasoning-budget", "0",
         "-sys", SYSTEM,
         "-p", case["prompt"],
         "-n", str(MAX_TOKENS),
@@ -78,6 +79,7 @@ summary = {
     "model": "XHToken/Spark-X2.5-1.7B-GGUF Q4_K_M",
     "seed": 42,
     "temperature": 0,
+    "reasoning_budget": 0,
     "max_tokens": MAX_TOKENS,
     "context": 512,
     "n_cases": len(results),

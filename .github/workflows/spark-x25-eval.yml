@@ -20,21 +20,28 @@ jobs:
           free -h | tee spark_eval/results/memory.txt
           python3 --version | tee spark_eval/results/python-version.txt
 
-      - name: Build pinned upstream llama.cpp
+      - name: Download pinned upstream llama.cpp runtime
+        shell: bash
         run: |
-          git clone --depth 1 --branch b10900 https://github.com/ggml-org/llama.cpp.git llama.cpp
-          git -C llama.cpp rev-parse HEAD | tee spark_eval/results/llama-cpp-revision.txt
-          cmake -S llama.cpp -B llama.cpp/build \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DGGML_NATIVE=ON \
-            -DLLAMA_BUILD_SERVER=OFF \
-            -DLLAMA_BUILD_TESTS=OFF \
-            -DLLAMA_CURL=OFF
-          cmake --build llama.cpp/build --config Release -j 4 --target llama-cli
+          set -euo pipefail
+          LLAMA_TAG=b10900
+          LLAMA_REV=50182a53fa2c26bd2a7fc31d855231effdc2f4ad
+          echo "$LLAMA_TAG" | tee spark_eval/results/llama-cpp-tag.txt
+          echo "$LLAMA_REV" | tee spark_eval/results/llama-cpp-revision.txt
+          curl -L --fail --retry 3 \
+            "https://github.com/ggml-org/llama.cpp/releases/download/${LLAMA_TAG}/llama-${LLAMA_TAG}-bin-ubuntu-x64.tar.gz" \
+            -o llama-bin.tar.gz
+          sha256sum llama-bin.tar.gz | tee spark_eval/results/llama-runtime-sha256.txt
+          mkdir -p llama-bin
+          tar -xzf llama-bin.tar.gz -C llama-bin --strip-components=1
+          find llama-bin -maxdepth 2 -type f -name 'llama-cli' -print
+          test -x llama-bin/llama-cli || chmod +x llama-bin/llama-cli
+          llama-bin/llama-cli --version | tee spark_eval/results/llama-version.txt
 
       - name: Resolve and download pinned official GGUF
         shell: bash
         run: |
+          set -euo pipefail
           python3 - <<'PY'
           import json, urllib.request
           repo='XHToken/Spark-X2.5-1.7B-GGUF'
@@ -53,7 +60,7 @@ jobs:
       - name: Run deterministic math case study
         env:
           MODEL_PATH: model.gguf
-          LLAMA_CLI: ./llama.cpp/build/bin/llama-cli
+          LLAMA_CLI: ./llama-bin/llama-cli
         run: python3 spark_eval/eval.py | tee spark_eval/results/run.log
 
       - name: Produce machine-readable manifest

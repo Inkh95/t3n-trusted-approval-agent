@@ -29,7 +29,6 @@ jobs:
             -DGGML_NATIVE=ON \
             -DLLAMA_BUILD_SERVER=OFF \
             -DLLAMA_BUILD_TESTS=OFF \
-            -DLLAMA_BUILD_EXAMPLES=OFF \
             -DLLAMA_CURL=OFF
           cmake --build llama.cpp/build --config Release -j 4 --target llama-cli
 

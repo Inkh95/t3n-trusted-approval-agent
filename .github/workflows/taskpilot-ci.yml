@@ -1,0 +1,44 @@
+name: TaskPilot Strands CI
+
+on:
+  push:
+    branches: [agents-for-humans-taskpilot]
+    paths:
+      - 'taskpilot/**'
+      - '.github/workflows/taskpilot-ci.yml'
+  pull_request:
+    paths:
+      - 'taskpilot/**'
+      - '.github/workflows/taskpilot-ci.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r taskpilot/requirements.txt pytest
+      - name: Install Ollama
+        run: curl -fsSL https://ollama.com/install.sh | sh
+      - name: Start Ollama and pull small local model
+        run: |
+          ollama serve > /tmp/ollama.log 2>&1 &
+          sleep 3
+          ollama pull qwen2.5:0.5b
+      - name: Run deterministic policy tests
+        run: |
+          cd taskpilot
+          pytest -q
+      - name: Run real Strands agent smoke test
+        env:
+          TASKPILOT_MODEL: qwen2.5:0.5b
+          OLLAMA_HOST: http://localhost:11434
+        run: |
+          cd taskpilot
+          python agent.py "Prepare a concise checklist for organizing meeting notes" --context "No external messages should be sent"

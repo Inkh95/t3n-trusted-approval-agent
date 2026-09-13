@@ -13,7 +13,7 @@ CASES = [
 ]
 
 SYSTEM = "Solve the math problem briefly. End with exactly one line: FINAL: <number>."
-MAX_TOKENS = 64
+MAX_TOKENS = 256
 
 def norm(x):
     try:

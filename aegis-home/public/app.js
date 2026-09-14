@@ -5,7 +5,7 @@ const gateEl = document.querySelector('#gate');
 const auditEl = document.querySelector('#audit');
 const scenarioButtons = document.querySelectorAll('[data-scenario]');
 
-const riskRank = { low: 0, medium: 1, high: 2, critical: 3 };
+const riskRank = { 'low-risk': 0, medium: 1, 'high-impact': 2, critical: 3 };
 
 function renderPlan(plan) {
   planEl.classList.remove('muted');
@@ -21,10 +21,10 @@ function renderPlan(plan) {
   `).join('');
 
   const consequential = plan.steps.filter((step) => step.requiresConfirmation).length;
-  const highest = plan.steps.reduce((max, step) => riskRank[step.level] > riskRank[max] ? step.level : max, 'low');
+  const highest = plan.steps.reduce((max, step) => (riskRank[step.level] ?? 0) > (riskRank[max] ?? 0) ? step.level : max, 'low-risk');
   auditEl.innerHTML = `
     <div><span>Intent</span><strong>${plan.intent}</strong></div>
-    <div><span>Policy</span><strong>${plan.policyVersion || 'aegis-policy'} · ${highest} max risk</strong></div>
+    <div><span>Policy</span><strong>${plan.policy?.version || 'aegis-policy'} · ${highest} max risk</strong></div>
     <div><span>Boundary</span><strong>${consequential ? `${consequential} action${consequential === 1 ? '' : 's'} held for approval` : 'Reversible actions only'}</strong></div>
     <div><span>Execution</span><strong>Simulation only · no device side effects</strong></div>
   `;

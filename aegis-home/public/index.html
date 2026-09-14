@@ -3,50 +3,61 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Aegis Home</title>
+  <meta name="description" content="Aegis Home is a human-in-the-loop safety layer for Alexa+ style household agents." />
+  <title>Aegis Home · Human control for agentic homes</title>
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
   <main class="shell">
     <header class="topbar">
-      <div>
-        <strong>Aegis Home</strong>
-        <span>Alexa+ agentic safety layer</span>
-      </div>
-      <span class="ready">● System ready</span>
+      <div><strong>Aegis Home</strong><span>Alexa+ agentic safety layer</span></div>
+      <span class="ready">● POLICY ENGINE ONLINE</span>
     </header>
 
     <section class="hero">
-      <p class="eyebrow">EXPLAINABLE ACTIONS, NOT BLIND AUTOMATION</p>
+      <p class="eyebrow">THE TRUST LAYER BETWEEN INTENT AND ACTION</p>
       <h1>Your home can act.<br />You stay in control.</h1>
-      <p>Turn natural-language requests into transparent household action plans, risk checks, and explicit approvals for consequential changes.</p>
+      <p>Aegis turns natural-language intent into an inspectable action plan, applies a deterministic safety policy, and stops at the human boundary before consequential actions.</p>
+      <div class="flow"><span>Intent</span><b>→</b><span>Plan</span><b>→</b><span>Policy</span><b>→</b><span>Approval</span><b>→</b><span>Audit</span></div>
+    </section>
+
+    <section class="scenario-strip">
+      <button class="scenario" data-scenario="Start my evening routine and make the house comfortable.">Evening routine</button>
+      <button class="scenario" data-scenario="Unlock the front door and turn on the hallway light.">Physical access</button>
+      <button class="scenario" data-scenario="Buy household supplies and set the thermostat to a comfortable temperature.">Purchase + comfort</button>
     </section>
 
     <section class="grid">
       <article class="card">
-        <p class="label">01 · REQUEST</p>
-        <h2>Tell Aegis what you want</h2>
+        <p class="label">01 · INTENT</p>
+        <h2>Ask naturally</h2>
         <textarea id="request">Start my evening routine and make the house comfortable.</textarea>
         <button id="analyze">Analyze & prepare actions</button>
+        <p class="microcopy">Try a consequential request. The important part of this demo is what Aegis refuses to do silently.</p>
       </article>
 
       <article class="card">
-        <p class="label">02 · PLAN</p>
-        <h2>Action preview</h2>
-        <div id="plan" class="plan muted">Run analysis to generate a policy-checked plan.</div>
+        <p class="label">02 · POLICY-CHECKED PLAN</p>
+        <h2>See the boundary before execution</h2>
+        <div id="plan" class="plan muted">Run analysis to generate an explainable plan.</div>
         <div id="gate"></div>
       </article>
     </section>
 
     <section class="card audit">
-      <p class="label">03 · AUDIT TRAIL</p>
-      <h2>Why Aegis made each decision</h2>
+      <div class="section-heading"><div><p class="label">03 · AUDITABILITY</p><h2>Every consequential decision leaves evidence</h2></div><span class="simulation">SIMULATED ALEXA+ EXPERIENCE</span></div>
       <div id="audit" class="audit-grid">
         <div><span>Intent</span><strong>Awaiting request</strong></div>
-        <div><span>Policy check</span><strong>Not run</strong></div>
-        <div><span>User control</span><strong>Not required yet</strong></div>
-        <div><span>Execution</span><strong>Simulated Alexa+ experience</strong></div>
+        <div><span>Policy</span><strong>Not evaluated</strong></div>
+        <div><span>Boundary</span><strong>No decision yet</strong></div>
+        <div><span>Execution</span><strong>Simulation only · no device side effects</strong></div>
       </div>
+    </section>
+
+    <section class="principles">
+      <div><strong>Deterministic guardrails</strong><p>The policy boundary does not depend on a model deciding whether its own action is safe.</p></div>
+      <div><strong>Least authority</strong><p>Planning and execution are separated so an agent cannot silently turn intent into side effects.</p></div>
+      <div><strong>Human evidence</strong><p>Consequential actions require an explicit decision that can be represented in an audit trail.</p></div>
     </section>
   </main>
   <script type="module" src="/app.js"></script>

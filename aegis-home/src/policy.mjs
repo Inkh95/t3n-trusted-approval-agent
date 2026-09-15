@@ -1,7 +1,7 @@
 const POLICY_RULES = [
   { pattern: /\b(unlock|open)\b.*\b(door|garage|gate)\b/i, level: 'critical', category: 'security', confirmation: true, rationale: 'This action can grant physical access and always requires explicit approval.' },
   { pattern: /\b(lock|arm|disarm|alarm|security)\b/i, level: 'high-impact', category: 'security', confirmation: true, rationale: 'This action changes home security state and requires explicit approval.' },
-  { pattern: /\b(oven|stove|heater|fireplace)\b/i, level: 'high-impact', category: 'safety', confirmation: true, rationale: 'This action can affect physical safety and requires explicit approval.' },
+  { pattern: /\b(oven|stove|heater|fireplace|heat-producing appliance)\b/i, level: 'high-impact', category: 'safety', confirmation: true, rationale: 'This action can affect physical safety and requires explicit approval.' },
   { pattern: /\b(purchase|buy|order|checkout|pay)\b/i, level: 'high-impact', category: 'financial', confirmation: true, rationale: 'This action can create a financial commitment and requires explicit approval.' }
 ];
 

@@ -16,6 +16,15 @@ test('unlock is treated as critical physical-access risk', () => {
   assert.equal(result.reversible, false);
 });
 
+test('natural open-door phrasing cannot bypass physical-access policy', () => {
+  for (const request of ['Open the front door', 'Open exterior door', 'Open my garage gate']) {
+    const plan = buildPlan(request);
+    assert.equal(plan.policy.highestRisk, 'critical');
+    assert.equal(plan.requiresConfirmation, true);
+    assert.equal(plan.executionBoundary, 'blocked-until-explicit-approval');
+  }
+});
+
 test('comfort actions remain low risk', () => {
   const result = classifyAction('Set living room lights to warm 35%');
   assert.equal(result.level, 'low-risk');
@@ -39,13 +48,25 @@ test('pure comfort request can proceed without a confirmation gate', () => {
 });
 
 test('financial actions cannot silently execute', () => {
-  const plan = buildPlan('Buy household supplies');
-  assert.equal(plan.requiresConfirmation, true);
-  assert.ok(plan.steps.some((step) => step.category === 'financial'));
+  for (const request of ['Buy household supplies', 'Order more filters', 'Pay for household supplies']) {
+    const plan = buildPlan(request);
+    assert.equal(plan.requiresConfirmation, true);
+    assert.ok(plan.steps.some((step) => step.category === 'financial'));
+  }
 });
 
 test('safety-sensitive appliance actions cannot silently execute', () => {
-  const plan = buildPlan('Turn on the oven');
+  for (const request of ['Turn on the oven', 'Start the heater', 'Turn on the fireplace']) {
+    const plan = buildPlan(request);
+    assert.equal(plan.requiresConfirmation, true);
+    assert.ok(plan.steps.some((step) => step.category === 'safety'));
+  }
+});
+
+test('mixed critical and comfort request keeps critical boundary', () => {
+  const plan = buildPlan('Open the front door and make the lights comfortable');
+  assert.equal(plan.policy.highestRisk, 'critical');
   assert.equal(plan.requiresConfirmation, true);
-  assert.ok(plan.steps.some((step) => step.category === 'safety'));
+  assert.ok(plan.steps.some((step) => step.category === 'comfort'));
+  assert.ok(plan.steps.some((step) => step.level === 'critical'));
 });

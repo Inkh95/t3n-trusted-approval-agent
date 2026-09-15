@@ -55,6 +55,13 @@ test('financial actions cannot silently execute', () => {
   }
 });
 
+test('generated safety action stays consequential after planning', () => {
+  const result = classifyAction('Turn on heat-producing appliance');
+  assert.equal(result.level, 'high-impact');
+  assert.equal(result.category, 'safety');
+  assert.equal(result.requiresConfirmation, true);
+});
+
 test('safety-sensitive appliance actions cannot silently execute', () => {
   for (const request of ['Turn on the oven', 'Start the heater', 'Turn on the fireplace']) {
     const plan = buildPlan(request);

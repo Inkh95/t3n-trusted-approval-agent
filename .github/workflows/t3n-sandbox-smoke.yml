@@ -1,0 +1,27 @@
+name: T3N Sandbox Smoke
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      T3N_MODE: t3n
+      T3N_API_KEY: ${{ secrets.T3N_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.18'
+          cache: npm
+      - run: npm ci
+      - name: Verify secret is configured
+        shell: bash
+        run: test -n "$T3N_API_KEY"
+      - name: Authenticate against Terminal 3 sandbox
+        run: node --input-type=module -e "const {T3nIdentityProvider}=await import('./src/t3n.ts'); const r=await new T3nIdentityProvider().connect(); if(r.mode!=='t3n'||!r.did) throw new Error('T3N authentication failed'); console.log('T3N sandbox authentication succeeded');"

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">T3N Nebius Edition architecture</title>
+<desc id="desc">Paid-task opportunity flows through deterministic T3N policy checks, Nebius-hosted NVIDIA Nemotron reasoning, economic scoring, routing, and tamper-evident audit logging.</desc>
+<rect width="1600" height="900" fill="#0b1220"/>
+<text x="80" y="90" font-family="Arial,Helvetica,sans-serif" font-size="48" font-weight="700" fill="#f5f7fb">T3N Nebius Edition</text>
+<text x="80" y="132" font-family="Arial,Helvetica,sans-serif" font-size="24" fill="#aab6c8">Probabilistic reasoning. Deterministic authorization. Auditable outcomes.</text>
+
+<defs>
+  <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#b9c7da"/></marker>
+  <style>
+    .box{stroke-width:3;rx:24;ry:24}.t{font:700 28px Arial,Helvetica,sans-serif;fill:#f4f7fb}.s{font:20px Arial,Helvetica,sans-serif;fill:#d7e0eb}.a{stroke:#b9c7da;stroke-width:6;fill:none;marker-end:url(#arrow)}
+  </style>
+</defs>
+
+<rect class="box" x="70" y="265" width="260" height="220" fill="#18304e" stroke="#5680ac"/>
+<text class="t" x="200" y="315" text-anchor="middle">Task Sources</text>
+<text class="s" x="200" y="365" text-anchor="middle">GitHub • Devpost</text>
+<text class="s" x="200" y="400" text-anchor="middle">Bounties • Contests</text>
+<text class="s" x="200" y="435" text-anchor="middle">Paid online work</text>
+
+<rect class="box" x="420" y="220" width="310" height="310" fill="#124d4d" stroke="#379898"/>
+<text class="t" x="575" y="275" text-anchor="middle">T3N Policy Gate</text>
+<text class="s" x="575" y="330" text-anchor="middle">AI permission</text>
+<text class="s" x="575" y="365" text-anchor="middle">Bulgaria eligibility</text>
+<text class="s" x="575" y="400" text-anchor="middle">Zero-cost participation</text>
+<text class="s" x="575" y="435" text-anchor="middle">Verified payout &amp; reward</text>
+<text class="s" x="575" y="470" text-anchor="middle">KYC / CAPTCHA / legal scope</text>
+
+<rect class="box" x="820" y="205" width="330" height="230" fill="#3e2b66" stroke="#8b67c7"/>
+<text class="t" x="985" y="260" text-anchor="middle">Nebius + NVIDIA</text>
+<text class="s" x="985" y="315" text-anchor="middle">Nemotron reasoning</text>
+<text class="s" x="985" y="350" text-anchor="middle">Ambiguity • risk flags</text>
+<text class="s" x="985" y="385" text-anchor="middle">Acceptance probability</text>
+
+<rect class="box" x="820" y="500" width="330" height="190" fill="#263d59" stroke="#6687aa"/>
+<text class="t" x="985" y="555" text-anchor="middle">Economic Score</text>
+<text class="s" x="985" y="605" text-anchor="middle">Expected value / hour</text>
+<text class="s" x="985" y="640" text-anchor="middle">Payout speed • competition</text>
+
+<rect class="box" x="1250" y="220" width="280" height="150" fill="#1c5b35" stroke="#55ad76"/>
+<text class="t" x="1390" y="275" text-anchor="middle">GO</text>
+<text class="s" x="1390" y="320" text-anchor="middle">Verified + auto-approved</text>
+
+<rect class="box" x="1250" y="410" width="280" height="150" fill="#704117" stroke="#c17c38"/>
+<text class="t" x="1390" y="465" text-anchor="middle">REVIEW_REQUIRED</text>
+<text class="s" x="1390" y="510" text-anchor="middle">Missing / risky evidence</text>
+
+<rect class="box" x="1250" y="600" width="280" height="150" fill="#65212a" stroke="#b65c69"/>
+<text class="t" x="1390" y="655" text-anchor="middle">NO_GO</text>
+<text class="s" x="1390" y="700" text-anchor="middle">Forbidden / blocked</text>
+
+<rect class="box" x="560" y="745" width="500" height="105" fill="#1c2c43" stroke="#566f90"/>
+<text class="t" x="810" y="792" text-anchor="middle">Tamper-Evident Audit Chain</text>
+<text class="s" x="810" y="825" text-anchor="middle">Route • score • blockers • reasoning metadata • SHA-256 linkage</text>
+
+<path class="a" d="M330 375 H420"/>
+<path class="a" d="M730 330 H820"/>
+<path class="a" d="M985 435 V500"/>
+<path class="a" d="M1150 560 C1200 560 1200 295 1250 295"/>
+<path class="a" d="M1150 590 H1250"/>
+<path class="a" d="M730 445 C1000 445 1050 675 1250 675"/>
+<path class="a" d="M985 690 C985 725 900 745 900 745"/>
+<path class="a" d="M1390 370 C1390 770 1060 797 1060 797"/>
+<path class="a" d="M1390 560 C1390 780 1060 815 1060 815"/>
+</svg>

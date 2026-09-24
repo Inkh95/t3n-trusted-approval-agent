@@ -1,12 +1,90 @@
 # T3N Trusted Approval Agent
 
-[Live interactive demo](https://t3n-trusted-approval-agent.kostovdobromir.chatgpt.site)
+[Live interactive demo](https://t3n-trusted-approval-agent.kostovdobromir.chatgpt.site) · [90-second judge walkthrough](docs/judge-walkthrough.md) · [Submission package](devpost-submission.md)
 
 A zero-cost, runnable MVP that puts a human approval boundary between an AI agent and sensitive real-world actions.
 
 Built for the **AWS Agents for Humans Hackathon** Professional Agents track. The orchestration layer uses the official Strands Agents TypeScript SDK and exposes two narrow tools: task evaluation and guarded task start.
 
 Tailored to **Task Hunter**: research and drafting can run autonomously, while applications, messages, account creation, and payments require explicit approval. Credential disclosure and CAPTCHA circumvention are denied.
+
+## T3N Nebius Edition
+
+The `nebius-hackathon` branch extends T3N for the **Nebius × NVIDIA Global AI Hackathon** with a hybrid architecture:
+
+- **Nebius Token Factory + NVIDIA Nemotron** provides structured reasoning about scope, ambiguity, risk, acceptance probability, and estimated effort.
+- **Deterministic policy gates** independently verify AI permission, Bulgaria eligibility, zero-cost participation, payout verification, reward confirmation, KYC/CAPTCHA constraints, and legal clarity.
+- **Economic scoring** ranks opportunities using expected value per hour, payout speed, and competition.
+- **Tamper-evident audit logging** records the final route and the evidence-derived decision path.
+
+The model never gets authority to override policy. Missing or conflicting evidence fails closed.
+
+![T3N Nebius Edition architecture](docs/nebius-architecture.svg)
+
+### Decision flow
+
+```text
+Opportunity
+   │
+   ├──> T3N deterministic policy gate ── blocked ──> REVIEW_REQUIRED / NO_GO
+   │
+   └──> Nebius-hosted Nemotron reasoning
+              │
+              └──> Economic score
+                       │
+                       └──> GO / REVIEW_REQUIRED / NO_GO
+                                  │
+                                  └──> Hash-chained audit event
+```
+
+### Run the Nebius demo
+
+The default demo uses mocked model output and requires no paid API:
+
+```bash
+npm install
+npm test
+npm run demo:nebius
+```
+
+For live inference with hackathon credits:
+
+```bash
+export NEBIUS_API_KEY='<your-local-key>'
+export RUN_NEBIUS_MODEL=1
+npm run demo:nebius
+```
+
+Optional overrides:
+
+```bash
+export NEBIUS_BASE_URL='https://api.tokenfactory.us-central1.nebius.com/v1'
+export NEBIUS_MODEL='nvidia/nemotron-3-super-120b-a12b'
+```
+
+Never commit API keys. Live inference uses the OpenAI-compatible Token Factory endpoint; model output is schema-validated before it can influence scoring.
+
+### 60-second judge path
+
+```bash
+npm ci
+npm run check
+npm run demo:nebius
+```
+
+Expected proof: 20 passing tests, one verified task routed to `GO`, one risky task routed to `REVIEW_REQUIRED`, a valid two-event audit chain, and fail-closed Daily Income source routing for Algora, Polar, Fiverr, and Contra. No credentials or paid calls are needed for this reproducible path.
+
+To inspect the same flow in the UI, run `npm start`, open `http://localhost:3000`, and use **Run judge demo**. The raw API result is also available at `GET /api/nebius/demo`.
+
+### What judges can verify quickly
+
+1. Run `npm test` and confirm policy, scoring, orchestration, and audit tests pass.
+2. Run `npm run demo:nebius`.
+3. Observe a verified AI-allowed, zero-cost, SEPA-paid opportunity route to `GO`.
+4. Observe an unsafe/unverified opportunity route to `REVIEW_REQUIRED`.
+5. Confirm the audit chain verifies after both decisions.
+
+This design intentionally separates **probabilistic reasoning** from **deterministic authorization**. T3N fits the **Best apps and agents** track: it is a practical opportunity copilot for people who want AI assistance without delegating safety-critical authority.
 
 ## How it works
 

@@ -118,3 +118,7 @@ That keeps the core safety mechanism independent of any particular device provid
 ## Open source
 
 Aegis Home is developed publicly in `Inkh95/t3n-trusted-approval-agent` and the repository is MIT licensed. The hackathon upgrade is isolated in the `aegis-home-10x` release-candidate branch until final validation, so the currently submitted version remains protected from accidental regressions.
+
+## Optional paid scenario lab
+
+The MIT source above is free. An [optional €39 Aegis Home Scenario Lab](https://payhip.com/b/QYelC) adds 12 fictional scenarios, a runnable decision report and additional tests. It is an educational simulated package; no household devices or Alexa account are connected, and purchase is not required to use this repository.

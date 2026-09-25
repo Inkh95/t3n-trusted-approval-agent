@@ -86,3 +86,7 @@ The reference path runs with a local Ollama model and does not require a paid AW
 ## License
 
 This new hackathon project is contributed under the repository's MIT license.
+
+## Optional paid policy lab
+
+The TaskPilot source above is free under MIT. An [optional €35 TaskPilot Approval Policy Lab](https://payhip.com/b/I3hHo) adds a separate dependency-free Python checker, 12 fictional typed-action scenarios and tests. It never performs external actions, runs no AI model, and is not required to use this repository.

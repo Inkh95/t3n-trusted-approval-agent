@@ -1,0 +1,25 @@
+name: Aegis Home CI
+
+on:
+  push:
+    branches: [amazon-aegis-home, aegis-home-10x]
+    paths:
+      - 'aegis-home/**'
+      - '.github/workflows/aegis-home-ci.yml'
+  pull_request:
+    paths:
+      - 'aegis-home/**'
+      - '.github/workflows/aegis-home-ci.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: aegis-home
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 20
+      - run: npm test
